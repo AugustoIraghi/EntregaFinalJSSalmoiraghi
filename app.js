@@ -165,7 +165,6 @@ cervezas.forEach((element,i) => {
           li.innerHTML = `<div id=itemC${length}>${carrito[length].cant} x ${carrito[length].nombre} $${subtotal}</div>`
           funcCalcularTotalScript()
       }else{
-        const listaCarrito = document.getElementById("listaCarrito")
         for (let index = 0; index < cantidad; index++) {
           carrito[finded].cant++
         }
