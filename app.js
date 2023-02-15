@@ -5,13 +5,20 @@ function finder(nombre){
   return index
 }
 
+function carritoInner(element,dom,i) {
+  subtotal = element.precioUn*element.cant
+  dom.innerHTML = `<div id=itemC${i}>${element.cant} x ${element.nombre} $${subtotal}</div>`
+  funcCalcularTotalScript()
+}
+
 // function displayNone() {
 //   document.getElementById("alertAgregado").style.display = "none"
 // }
 
 function funcCalcularTotalScript(){
-  const totalCarrito = document.createElement("div")
-  containerCarrito.appendChild(totalCarrito)
+  // const totalCarrito = document.createElement("div")
+  // containerCarrito.appendChild(totalCarrito)
+  const totalCarrito = document.getElementById("totalCarrito")
   let t = 0
   carrito.forEach(element => {
     t+=element.precioUn*element.cant
@@ -24,6 +31,7 @@ function funcCalcularTotalScript(){
 function funcVaciarCarrito(){
   carrito = []
   localStorage.clear()
+  funcCalcularTotalScript()
 }
 
 // function funcAgregarScriptCarrito{
@@ -68,6 +76,12 @@ let cervezas = [beer0,beer1,beer2,beer3,beer4,beer5,beer6,beer7,beer8]
 
 const ul = document.getElementById("lista")
 
+const containerCarrito = document.getElementById("containerCarrito")
+
+const mostrarCarrito = document.getElementById("mostrarCarrito")
+
+const panelCarrito = document.getElementById("panelCarrito")
+
 cervezas.forEach((element,i) => {
     const li = document.createElement("li")
     li.innerHTML = `
@@ -102,7 +116,25 @@ const carritoLS = JSON.parse(localStorage.getItem("carrito"))
 if(carritoLS){
     carrito = carritoLS
 }
+
+console.log(carrito)
+
+carrito.forEach((element,i) => {
+  const li = document.createElement("li")
+  let subtotal = 0
+  subtotal = element.precioUn*element.cant
+  li.innerHTML = `<div id=itemC${i}>${element.cant} x ${element.nombre} $${subtotal}</div>`
+  listaCarrito.appendChild(li)
+
+});
+funcCalcularTotalScript()
+
+
 let finded
+
+// const listaCarrito = document.createElement("ul")
+// containerCarrito.appendChild(listaCarrito)
+
 
 cervezas.forEach((element,i) => {
     const inputCant = document.getElementById(`inputCant${i}`)
@@ -116,11 +148,38 @@ cervezas.forEach((element,i) => {
 
       finded = finder(element.nombre)
 
+      console.log(finded)
+
       if(finded==-1){
-          carrito.push({nombre:element.nombre, cant: cantidad, precioUn:element.precio})        
+          const listaCarrito = document.getElementById("listaCarrito")
+          carrito.push({nombre:element.nombre, cant: cantidad, precioUn:element.precio})
+          const li = document.createElement("li")
+          let length = carrito.length-1
+          console.log(length)
+
+          console.log("producto",carrito[length].precioUn,carrito[length].cant)
+
+
+          subtotal = carrito[length].precioUn*carrito[length].cant
+          listaCarrito.appendChild(li)
+          li.innerHTML = `<div id=itemC${length}>${carrito[length].cant} x ${carrito[length].nombre} $${subtotal}</div>`
+          funcCalcularTotalScript()
       }else{
+        const listaCarrito = document.getElementById("listaCarrito")
         for (let index = 0; index < cantidad; index++) {
-          carrito[finded].cant++}
+          carrito[finded].cant++
+        }
+        console.log("entra a else")
+        const elementoRepetido = document.getElementById(`itemC${finded}`)
+        console.log(carrito[finded].precioUn,carrito[finded].cant)
+        subtotal = carrito[finded].precioUn*carrito[finded].cant
+        elementoRepetido.innerHTML = `${carrito[finded].cant} x ${carrito[finded].nombre} $${subtotal}`
+        funcCalcularTotalScript()
+
+
+          // carritoInner(element,elementoRepetido,i)
+          // elementoRepetido = child UL [finded]
+          // elementoRepetido.innerHTML = `${element.cant} x ${element.nombre} $${subtotal}`
       }
 
 
@@ -182,11 +241,7 @@ cervezas.forEach((element,i) => {
 });
 
 
-const containerCarrito = document.getElementById("containerCarrito")
 
-const mostrarCarrito = document.getElementById("mostrarCarrito")
-
-const panelCarrito = document.getElementById("panelCarrito")
 
 
 // Animacion pestaña carrito
@@ -238,22 +293,22 @@ function funcAgregarAniOut() {
 
 mostrarCarrito.addEventListener("click",() =>{
 
+  // const listaCarrito = document.createElement("ul")
+  // containerCarrito.appendChild(listaCarrito)
   panelCarrito.animate(carritoAnimationIn,animationDuration)
   setTimeout(funcAniIn,500)
-
-  const listaCarrito = document.createElement("ul")
-  containerCarrito.appendChild(listaCarrito)
   
   carrito.forEach(element => {
-    const li = document.createElement("li")
-    let subtotal = 0
-    subtotal = element.precioUn*element.cant
-    li.innerHTML = `${element.cant} x ${element.nombre} $${subtotal}`
-    listaCarrito.appendChild(li)
+    // const li = document.createElement("li")
+    // let subtotal = 0
+    // subtotal = element.precioUn*element.cant
+    // li.innerHTML = `${element.cant} x ${element.nombre} $${subtotal}`
+    // listaCarrito.appendChild(li)
+  
   });
 
 
-  totalCarrito = funcCalcularTotalScript()
+  // totalCarrito = funcCalcularTotalScript()
   
 
 
@@ -261,15 +316,17 @@ mostrarCarrito.addEventListener("click",() =>{
   cerrarCarrito.addEventListener("click",() =>{
     panelCarrito.animate(carritoAnimationOut,animationDuration)
     setTimeout(funcAniOut,500)
-    listaCarrito.remove()
-    totalCarrito.remove()
+    // listaCarrito.remove()
+    // totalCarrito.remove()
+    funcCalcularTotalScript()
   })
   const vaciarCarrito = document.getElementById("vaciarCarrito")  
 
   vaciarCarrito.addEventListener("click",() =>{
-  listaCarrito.remove()
-  totalCarrito.remove()
-  totalCarrito = funcCalcularTotalScript()
-  funcVaciarCarrito()
+    document.getElementById("listaCarrito").remove()
+    const listaCarritoDiv = document.getElementById("listaCarritoDiv")
+    listaCarritoDiv.innerHTML = `<ul id= "listaCarrito"></ul>`
+    // totalCarrito.remove()
+    funcVaciarCarrito()
 })
 })
