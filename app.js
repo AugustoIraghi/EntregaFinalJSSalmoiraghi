@@ -11,6 +11,9 @@ function carritoInner(element,dom,i) {
   funcCalcularTotalScript()
 }
 
+function funcBtnAgregar(){
+  
+}
 // function displayNone() {
 //   document.getElementById("alertAgregado").style.display = "none"
 // }
@@ -123,7 +126,10 @@ carrito.forEach((element,i) => {
   const li = document.createElement("li")
   let subtotal = 0
   subtotal = element.precioUn*element.cant
-  li.innerHTML = `<div id=itemC${i}>${element.cant} x ${element.nombre} $${subtotal}</div>`
+  li.innerHTML = `          <div id=itemC${i}>          
+  <button id="agregar" class="myButton">+</button> ${carrito[i].cant}
+  <button id="sacar" class="myButton">-</button> 
+  x ${carrito[i].nombre} $${subtotal}</div>`
   listaCarrito.appendChild(li)
 
 });
@@ -162,7 +168,11 @@ cervezas.forEach((element,i) => {
 
           subtotal = carrito[length].precioUn*carrito[length].cant
           listaCarrito.appendChild(li)
-          li.innerHTML = `<div id=itemC${length}>${carrito[length].cant} x ${carrito[length].nombre} $${subtotal}</div>`
+          li.innerHTML = `
+          <div id=itemC${length}>          
+          <button id="agregar" class="myButton">+</button> ${carrito[length].cant}
+          <button id="sacar" class="myButton">-</button> 
+          x ${carrito[length].nombre} $${subtotal}</div>`
           funcCalcularTotalScript()
       }else{
         for (let index = 0; index < cantidad; index++) {
@@ -172,7 +182,9 @@ cervezas.forEach((element,i) => {
         const elementoRepetido = document.getElementById(`itemC${finded}`)
         console.log(carrito[finded].precioUn,carrito[finded].cant)
         subtotal = carrito[finded].precioUn*carrito[finded].cant
-        elementoRepetido.innerHTML = `${carrito[finded].cant} x ${carrito[finded].nombre} $${subtotal}`
+        elementoRepetido.innerHTML = `
+        <button id="agregar" class="myButton">+</button> ${carrito[finded].cant}
+          <button id="sacar" class="myButton">-</button> x ${carrito[finded].nombre} $${subtotal}`
         funcCalcularTotalScript()
 
 
