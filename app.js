@@ -127,9 +127,9 @@ carrito.forEach((element,i) => {
   let subtotal = 0
   subtotal = element.precioUn*element.cant
   li.innerHTML = `          <div id=itemC${i}>          
-//  <button id="agregar" class="myButton">+</button> 
+  <button id="agregar" class="myButton">+</button> 
    ${carrito[i].cant}
-//  <button id="sacar" class="myButton">-</button> 
+  <button id="sacar" class="myButton">-</button> 
   x ${carrito[i].nombre} $${subtotal}</div>`
   listaCarrito.appendChild(li)
 
@@ -171,9 +171,9 @@ cervezas.forEach((element,i) => {
           listaCarrito.appendChild(li)
           li.innerHTML = `
           <div id=itemC${length}>          
-       //   <button id="agregar" class="myButton">+</button> 
+          <button id="agregar" class="myButton">+</button> 
            ${carrito[length].cant}
-      //    <button id="sacar" class="myButton">-</button> 
+          <button id="sacar" class="myButton">-</button> 
           x ${carrito[length].nombre} $${subtotal}</div>`
           funcCalcularTotalScript()
       }else{
