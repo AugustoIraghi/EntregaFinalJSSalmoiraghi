@@ -11,12 +11,66 @@ function carritoInner(element,dom,i) {
   funcCalcularTotalScript()
 }
 
-function funcBtnAgregar(){
+function buttonsFunc(i){
   
+  const btnAgregar = document.getElementById(`agregar${i}`)
+
+  btnAgregar.addEventListener("click",()=>{
+    carrito[i].cant++
+    modifyList(i)
+    funcCalcularTotalScript()
+  })
+
+  
+  const btnSacar = document.getElementById(`sacar${i}`)
+
+  btnSacar.addEventListener("click",()=>{
+  carrito[i].cant--
+  modifyList(i)
+  if(carrito[i].cant==0){
+    document.getElementById(`itemC${i}`).remove()
+    carrito.splice(i,1)
+    console.log(carrito)
+    funcCalcularTotalScript()
+  }
+
+})
 }
-// function displayNone() {
-//   document.getElementById("alertAgregado").style.display = "none"
-// }
+
+function listInnerHtml(i){
+  const listaCarrito = document.getElementById("listaCarrito")
+
+  const tr = document.createElement("tr")
+  tr.setAttribute("id", `itemC${i}`);
+  let subtotal = carrito[i].precioUn*carrito[i].cant
+
+  tr.innerHTML = `
+
+    <td><div class="cantCarr">${carrito[i].cant}<div class="buttonsDiv"><button id="agregar${i}" class="myButton agregar">+</button><button id="sacar${i}" class="myButton sacar">-</button></div></div></td>
+    <td>${carrito[i].nombre}</td>
+    <td>$${subtotal}</td>
+
+  `
+  listaCarrito.appendChild(tr)
+
+  buttonsFunc(i)
+
+  funcCalcularTotalScript()
+}
+
+function modifyList(i) {
+    const itemToModify = document.getElementById(`itemC${i}`)
+    let subtotal = carrito[i].precioUn*carrito[i].cant
+    itemToModify.innerHTML = `
+
+    <td><div class="cantCarr">${carrito[i].cant}<div class="buttonsDiv"><button id="agregar${i}" class="myButton agregar">+</button><button id="sacar${i}" class="myButton sacar">-</button></div></div></td>
+    <td>${carrito[i].nombre}</td>
+    <td>$${subtotal}</td>
+    `
+    buttonsFunc(i)
+    funcCalcularTotalScript()
+}
+
 
 function funcCalcularTotalScript(){
   // const totalCarrito = document.createElement("div")
@@ -28,6 +82,8 @@ function funcCalcularTotalScript(){
   });
   
   totalCarrito.innerHTML = "Total: $"+t
+  const carritoJSON = JSON.stringify(carrito)
+  localStorage.setItem("carrito", carritoJSON)
   return totalCarrito
 }
 
@@ -85,6 +141,8 @@ const mostrarCarrito = document.getElementById("mostrarCarrito")
 
 const panelCarrito = document.getElementById("panelCarrito")
 
+// const listaCarrito = document.getElementById("listaCarrito")
+
 cervezas.forEach((element,i) => {
     const li = document.createElement("li")
     li.innerHTML = `
@@ -123,18 +181,24 @@ if(carritoLS){
 console.log(carrito)
 
 carrito.forEach((element,i) => {
-  const li = document.createElement("li")
-  let subtotal = 0
-  subtotal = element.precioUn*element.cant
-  li.innerHTML = `          <div id=itemC${i}>          
-  <button id="agregar" class="myButton">+</button> 
-   ${carrito[i].cant}
-  <button id="sacar" class="myButton">-</button> 
-  x ${carrito[i].nombre} $${subtotal}</div>`
-  listaCarrito.appendChild(li)
+  // const tr = document.createElement("tr")
+  // let subtotal = 0
+  // subtotal = element.precioUn*element.cant
+  
+  // li.innerHTML = `          <div id=itemC${i}>          
+  // <button id="agregar" class="myButton">+</button> 
+  //  ${carrito[i].cant}
+  // <button id="sacar" class="myButton">-</button> 
+  // x ${carrito[i].nombre} $${subtotal}</div>`
+
+  // tr.innerHTML = `<tr>
+  // <td><button id="agregar" class="myButton">+</button><button id="sacar" class="myButton">-</button> ${carrito[i].cant}</td><td>${carrito[i].nombre}</td><td>$${subtotal}</td></tr>`
+  // listaCarrito.appendChild(tr)
+
+  listInnerHtml(i)
 
 });
-funcCalcularTotalScript()
+// funcCalcularTotalScript()
 
 
 let finded
@@ -158,24 +222,34 @@ cervezas.forEach((element,i) => {
       console.log(finded)
 
       if(finded==-1){
-          const listaCarrito = document.getElementById("listaCarrito")
+          // const listaCarrito = document.getElementById("listaCarrito")
           carrito.push({nombre:element.nombre, cant: cantidad, precioUn:element.precio})
-          const li = document.createElement("li")
           let length = carrito.length-1
-          console.log(length)
-
-          console.log("producto",carrito[length].precioUn,carrito[length].cant)
 
 
-          subtotal = carrito[length].precioUn*carrito[length].cant
-          listaCarrito.appendChild(li)
-          li.innerHTML = `
-          <div id=itemC${length}>          
-          <button id="agregar" class="myButton">+</button> 
-           ${carrito[length].cant}
-          <button id="sacar" class="myButton">-</button> 
-          x ${carrito[length].nombre} $${subtotal}</div>`
-          funcCalcularTotalScript()
+          listInnerHtml(length)
+
+          // const li = document.createElement("li")
+          // console.log(length)
+
+          // console.log("producto",carrito[length].precioUn,carrito[length].cant)
+
+
+          // subtotal = carrito[length].precioUn*carrito[length].cant
+          // listaCarrito.appendChild(li)
+
+          // li.innerHTML = `
+          // <div id=itemC${length}>          
+          // <button id="agregar" class="myButton">+</button> 
+          //  ${carrito[length].cant}
+          // <button id="sacar" class="myButton">-</button> 
+          // x ${carrito[length].nombre} $${subtotal}</div>`
+
+          // li.innerHTML = `
+          // <td><button id="agregar" class="myButton">+</button><button id="sacar" class="myButton">-</button> ${carrito[length].cant}</td><td>${carrito[length].nombre}</td><td>$${subtotal}</td></tr>`
+
+          
+          // funcCalcularTotalScript()
       }else{
         for (let index = 0; index < cantidad; index++) {
           carrito[finded].cant++
@@ -184,9 +258,17 @@ cervezas.forEach((element,i) => {
         const elementoRepetido = document.getElementById(`itemC${finded}`)
         console.log(carrito[finded].precioUn,carrito[finded].cant)
         subtotal = carrito[finded].precioUn*carrito[finded].cant
+        // elementoRepetido.innerHTML = `
+        // <button id="agregar" class="myButton">+</button> ${carrito[finded].cant}
+        // <button id="sacar" class="myButton">-</button> x ${carrito[finded].nombre} $${subtotal}`
+        
         elementoRepetido.innerHTML = `
-        <button id="agregar" class="myButton">+</button> ${carrito[finded].cant}
-          <button id="sacar" class="myButton">-</button> x ${carrito[finded].nombre} $${subtotal}`
+        <td><div class="cantCarr">${carrito[finded].cant}<div class="buttonsDiv"><button id="agregar${finded}" class="myButton agregar">+</button><button id="sacar${finded}" class="myButton sacar">-</button></div></div></td>
+        <td>${carrito[finded].nombre}</td>
+        <td>$${subtotal}</td>
+        `
+        buttonsFunc(i)
+
         funcCalcularTotalScript()
 
 
@@ -196,8 +278,7 @@ cervezas.forEach((element,i) => {
       }
 
 
-      const carritoJSON = JSON.stringify(carrito)
-      localStorage.setItem("carrito", carritoJSON)
+
 
 
       
@@ -336,9 +417,18 @@ mostrarCarrito.addEventListener("click",() =>{
   const vaciarCarrito = document.getElementById("vaciarCarrito")  
 
   vaciarCarrito.addEventListener("click",() =>{
-    document.getElementById("listaCarrito").remove()
+    // document.getElementById("listaCarrito").remove()
     const listaCarritoDiv = document.getElementById("listaCarritoDiv")
-    listaCarritoDiv.innerHTML = `<ul id= "listaCarrito"></ul>`
+    listaCarritoDiv.innerHTML = `                            <thead>
+    <tr>
+      <th>Cantidad</th>
+      <th>Cerveza</th>
+      <th>Subtotal</th>
+    </tr>
+    </thead>
+
+    <tbody id="listaCarrito">
+    </tbody>`
     // totalCarrito.remove()
     funcVaciarCarrito()
 })
