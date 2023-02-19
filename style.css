@@ -24,6 +24,11 @@ h1{
 	font-family: 'Montserrat', sans-serif;
 }
 
+
+.form-control{
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
 /* #containerCarrito div{
     margin-top: 20px;
 } */
