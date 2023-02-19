@@ -11,6 +11,20 @@ function carritoInner(element,dom,i) {
   funcCalcularTotalScript()
 }
 
+function carritoHeaderBuilder() {
+  const listaCarritoDiv = document.getElementById("listaCarritoDiv")
+  listaCarritoDiv.innerHTML = `                            <thead>
+  <tr>
+    <th>Cantidad</th>
+    <th>Cerveza</th>
+    <th>Subtotal</th>
+  </tr>
+  </thead>
+
+  <tbody id="listaCarrito">
+  </tbody>`
+}
+
 function buttonsFunc(i){
   
   const btnAgregar = document.getElementById(`agregar${i}`)
@@ -28,9 +42,14 @@ function buttonsFunc(i){
   carrito[i].cant--
   modifyList(i)
   if(carrito[i].cant==0){
-    document.getElementById(`itemC${i}`).remove()
+    // document.getElementById(`itemC${i}`).remove()
     carrito.splice(i,1)
-    console.log(carrito)
+    carritoHeaderBuilder()
+    carrito.forEach((element,index) => {
+      listInnerHtml(index)
+    })
+    
+    // console.log(carrito)
     funcCalcularTotalScript()
   }
 
@@ -181,6 +200,7 @@ if(carritoLS){
 console.log(carrito)
 
 carrito.forEach((element,i) => {
+  listInnerHtml(i)
   // const tr = document.createElement("tr")
   // let subtotal = 0
   // subtotal = element.precioUn*element.cant
@@ -194,9 +214,6 @@ carrito.forEach((element,i) => {
   // tr.innerHTML = `<tr>
   // <td><button id="agregar" class="myButton">+</button><button id="sacar" class="myButton">-</button> ${carrito[i].cant}</td><td>${carrito[i].nombre}</td><td>$${subtotal}</td></tr>`
   // listaCarrito.appendChild(tr)
-
-  listInnerHtml(i)
-
 });
 // funcCalcularTotalScript()
 
@@ -419,17 +436,7 @@ mostrarCarrito.addEventListener("click",() =>{
 
   vaciarCarrito.addEventListener("click",() =>{
     // document.getElementById("listaCarrito").remove()
-    const listaCarritoDiv = document.getElementById("listaCarritoDiv")
-    listaCarritoDiv.innerHTML = `                            <thead>
-    <tr>
-      <th>Cantidad</th>
-      <th>Cerveza</th>
-      <th>Subtotal</th>
-    </tr>
-    </thead>
-
-    <tbody id="listaCarrito">
-    </tbody>`
+    carritoHeaderBuilder()
     // totalCarrito.remove()
     funcVaciarCarrito()
 })
