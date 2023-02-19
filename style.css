@@ -54,6 +54,7 @@ h1{
     right: 0;
     margin-left: auto;
     margin-right: auto;
+	z-index: 10;
     /* display: none; */
 
     /* animacion */
@@ -88,9 +89,9 @@ h1{
 }
 /* Fin boton carrito */
 
-/* #totalCarrito{
-	margin-left: auto;
-} */
+#totalCarrito{
+	margin-top: 3vh;
+}
 
 
 .buttonsDiv{
@@ -175,7 +176,7 @@ border: solid 2px #e76f51;
 /* seccion carrito */
 #panelCarrito{
     position: fixed;
-    background-color:aliceblue;
+    background-color:rgb(240, 238, 234);
     /* right: 0; */
     left: 100vw;
     margin-left: auto;
@@ -231,7 +232,7 @@ border: solid 2px #e76f51;
 
 /* Tabla */
 table.blueTable {
-	border: 4px solid #FFFFFF;
+	border: 4px solid rgb(240, 238, 234);;
 	width: 55vw;
 	text-align: center;
 	border-collapse: collapse;

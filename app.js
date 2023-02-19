@@ -147,7 +147,7 @@ cervezas.forEach((element,i) => {
     const li = document.createElement("li")
     li.innerHTML = `
       
-        <ul class="col">
+        <div class="animate__fadeInUp">
           <div class="card shadow-sm">
             <img src="./img/cerveza${i}.jpg" alt="" class="bd-placeholder-img card-img-top imgCover" width="100%" height="225">
             <div class="card-body">
@@ -255,21 +255,22 @@ cervezas.forEach((element,i) => {
           carrito[finded].cant++
         }
         console.log("entra a else")
-        const elementoRepetido = document.getElementById(`itemC${finded}`)
-        console.log(carrito[finded].precioUn,carrito[finded].cant)
-        subtotal = carrito[finded].precioUn*carrito[finded].cant
-        // elementoRepetido.innerHTML = `
-        // <button id="agregar" class="myButton">+</button> ${carrito[finded].cant}
-        // <button id="sacar" class="myButton">-</button> x ${carrito[finded].nombre} $${subtotal}`
+        modifyList(finded)
+        // const elementoRepetido = document.getElementById(`itemC${finded}`)
+        // console.log(carrito[finded].precioUn,carrito[finded].cant)
+        // subtotal = carrito[finded].precioUn*carrito[finded].cant
+        // // elementoRepetido.innerHTML = `
+        // // <button id="agregar" class="myButton">+</button> ${carrito[finded].cant}
+        // // <button id="sacar" class="myButton">-</button> x ${carrito[finded].nombre} $${subtotal}`
         
-        elementoRepetido.innerHTML = `
-        <td><div class="cantCarr">${carrito[finded].cant}<div class="buttonsDiv"><button id="agregar${finded}" class="myButton agregar">+</button><button id="sacar${finded}" class="myButton sacar">-</button></div></div></td>
-        <td>${carrito[finded].nombre}</td>
-        <td>$${subtotal}</td>
-        `
-        buttonsFunc(i)
+        // elementoRepetido.innerHTML = `
+        // <td><div class="cantCarr">${carrito[finded].cant}<div class="buttonsDiv"><button id="agregar${finded}" class="myButton agregar">+</button><button id="sacar${finded}" class="myButton sacar">-</button></div></div></td>
+        // <td>${carrito[finded].nombre}</td>
+        // <td>$${subtotal}</td>
+        // `
+        // buttonsFunc(i)
 
-        funcCalcularTotalScript()
+        // funcCalcularTotalScript()
 
 
           // carritoInner(element,elementoRepetido,i)
